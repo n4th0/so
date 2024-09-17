@@ -1,4 +1,5 @@
 
+#include <signal.h>
 #include <unistd.h>
 #include <sys/wait.h>
 #include <stdio.h>
@@ -8,15 +9,12 @@
 int main(){
     int a, b;
 
-    
-
-
-
     switch (fork()) {
         case 0:
             printf("soy hijo %d\n", getpid());
             sleep(4);
-            exit(10);
+            
+            exit(0b100000010);
         default:
             wait(&b);
 

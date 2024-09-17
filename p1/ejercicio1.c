@@ -26,12 +26,10 @@ int main(int argc, char ** argv){
         exit(-1);
     
     // se obtienen las medidas
-    int col = atoi(argv[1])-1; 
-    int fil = atoi(argv[2])-1;
+    int col = atoi(argv[1]); 
+    int fil = atoi(argv[2]);
 
-
-
-    int id = fork();
+    int id = 1;
 
     // se generan los hijos que va a tener el proceso principal
     for (int i =0; i<col; i++) {

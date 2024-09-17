@@ -23,7 +23,7 @@ int main(){
         }
     }
 
-    
+
 
     printf("proceso con pid: %d, final\n", getpid());
 
