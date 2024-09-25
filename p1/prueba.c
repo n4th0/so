@@ -43,12 +43,18 @@ int main(int argc, char ** argv){
             if (a == 0) {
                 printf("Soy el proceso X y tengo el pid: %d. Mi padre es %d. Mi abuelo es %d. Mi bisabuelo es %d\n", getpid(), B,A, ejec);
                 X = getpid();
+                alarm(alar);
+                signal(SIGALRM, alarma);
+                pause();
 
             }else {
                 a =fork();
                 if (a == 0) {
                     printf("Soy el proceso Y y tengo el pid: %d. Mi padre es %d. Mi abuelo es %d. Mi bisabuelo es %d\n", getpid(), B,A, ejec);
                     Y = getpid();
+                    alarm(alar);
+                    signal(SIGALRM, alarma);
+                    pause();
 
                 }else {
                     a= fork();
@@ -58,32 +64,26 @@ int main(int argc, char ** argv){
                         alarm(alar);
                         signal(SIGALRM, alarma);
                         pause();
-
                     }
                 }
             }
         }
     }
 
-
-
-    // no se si esto es completamente legal
     if (A == getpid()) {
-        sleep(alar+4);
+        wait(NULL);
         printf("Soy A (%d) y muero. \n", getpid());
     }else if (B == getpid()) {
-        sleep(alar+3);
+        wait(NULL);
         printf("Soy B (%d) y muero. \n", getpid());
-    }else if (X == getpid()) {
-        sleep(alar+2);
-        printf("Soy X (%d) y muero. \n", getpid());
-    }else if (Y == getpid()) {
-        sleep(alar+1);
-        printf("Soy Y (%d) y muero. \n", getpid());
     }else if (Z == getpid()) {
         printf("Soy Z (%d) y muero. \n", getpid());
+    }else if (Y == getpid()) {
+        printf("Soy Y (%d) y muero. \n", getpid());
+    }else if (X == getpid()) {
+        printf("Soy X (%d) y muero. \n", getpid());
     }else if (ejec == getpid()) {
-        sleep(alar+5);
+        wait(NULL);
         printf("Soy ejec (%d) y muero. \n", getpid());
     }
 

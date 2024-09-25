@@ -3,6 +3,6 @@
 
 for (( ; ; )) do 
     clear; 
-    pstree -c | grep $1;
+    pstree -cp | grep $1;
     sleep 0.5;
 done
