@@ -87,27 +87,5 @@ int main(int argc, char ** argv){
         printf("Soy ejec (%d) y muero. \n", getpid());
     }
 
-    // if (A == getpid()) {
-    //     waitpid(B, NULL, WCONTINUED);
-    //     printf("Soy A (%d) y muero. \n", getpid());
-    // }else if (B == getpid()) {
-    //     waitpid(X, NULL, WCONTINUED);
-    //     printf("Soy B (%d) y muero. \n", getpid());
-    // }else if (X == getpid()) {
-    //     waitpid(Y, NULL, WCONTINUED);
-    //     printf("Soy X (%d) y muero. \n", getpid());
-    // }else if (Y == getpid()) {
-    //     waitpid(Z, NULL, WCONTINUED);
-    //     printf("Soy Y (%d) y muero. \n", getpid());
-    // }else if (Z == getpid()) {
-    //     printf("Soy Z (%d) y muero. \n", getpid());
-    // }else if (ejec == getpid()) {
-    //     waitpid(A, NULL, WCONTINUED);
-    //     printf("Soy ejec (%d) y muero. \n", getpid());
-    // }
-
-
-
-
 
 }

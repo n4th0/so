@@ -2,15 +2,14 @@
 
 #include <signal.h>
 #include <stdio.h>
-#include <sys/wait.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <sys/types.h>
 #include <sys/ipc.h>
 #include <sys/shm.h>
 
-void printVector(int *x, int size, int a){
+void printVector(int *x, int size, int a, int padre){
     printf("Soy el subhijo %d, mis padres son: ", a);
+    printf(" %d ", padre);
     for (int i = 0; i<size; i++) {
         printf(" %d ", x[i]);
     }
@@ -19,9 +18,9 @@ void printVector(int *x, int size, int a){
 
 int main(int argc, char ** argv){
 
-    if (argc != 3) {
+    if (argc != 3) 
         exit(9);
-    }
+    
 
     int x = atoi(argv[1]);
     int y = atoi(argv[2]);
@@ -42,7 +41,6 @@ int main(int argc, char ** argv){
         }    
     }
 
-
     if (a == 0) {
         a = 1;
         for (int i = x; i<(x+y); i++) {
@@ -53,13 +51,10 @@ int main(int argc, char ** argv){
         }
     }
 
-
     if (getpid() == superPadre) {
-        // signal(SIGALRM, NULL);
-        // pause();
 
         sleep(1);
-        printf("Soy el superPadre (%d): mis hijos finales son:", getpid());
+        printf("Soy el superPadre (%d) mis hijos finales son:", getpid());
         for (int i = 0; i<(x+y); i++) {
             printf(" %d ", hijos[i]);
         }
@@ -67,11 +62,18 @@ int main(int argc, char ** argv){
     }
     /// print stuff
     for (int i = 0; i<=x; i++) {
-        if (getpid() == hijos[i] && getpid() !=superPadre && i!=0) {
-            printVector(hijos, i, getpid());
+        if (getpid() == hijos[i] && getpid() !=superPadre && getpid()!=hijos[0]) {
+            printVector(hijos, i, getpid(), superPadre);
         } 
     }
-    if (hijos[0] == getpid() && getpid()!=superPadre) {
+
+    for (int i = (x+1); i<(x+y); i++) {
+        if (getpid() == hijos[i]) {
+            printVector(hijos, x, getpid(), superPadre);
+        } 
+    }
+
+    if (hijos[0] == getpid()) {
         printf("Soy el subhijo %d, mi padre es: %d\n", getpid(), superPadre);
     }
 

@@ -27,7 +27,7 @@ int main(int argc, char ** argv){
     
     // se obtienen las medidas
     int col = atoi(argv[1]); 
-    int fil = atoi(argv[2]);
+    int fil = atoi(argv[2])-1;
 
     int id = 1;
 
@@ -39,14 +39,14 @@ int main(int argc, char ** argv){
     }
 
     // se generan los hijos de los hijos que harán la malla
-    for (int i =0; i<col; i++) {
+    for (int i =0; i<fil; i++) {
         if (id == 0) {
             id = fork();
         }
     }
     
-    sleep(TIEMPO_ESPERA); 
-    // tiempo de espera para que de tiempo ha visualizarlo
+    sleep(TIEMPO_ESPERA); // tiempo de espera para que de 
+                                   // tiempo ha visualizarlo
 }
 
 
