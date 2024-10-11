@@ -60,6 +60,7 @@ int main(int argc, char ** argv){
         }
         printf("\n");
     }
+
     /// print stuff
     for (int i = 0; i<=x; i++) {
         if (getpid() == hijos[i] && getpid() !=superPadre && getpid()!=hijos[0]) {

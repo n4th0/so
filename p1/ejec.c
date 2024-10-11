@@ -1,4 +1,3 @@
-
 /**
  *
  * @author nathan rodriguez 
@@ -23,12 +22,10 @@ int main(int argc, char ** argv){
 
     int alar = atoi(argv[1]);
     
-    
     printf("Soy el proceso eject y tengo el pid: %d\n", getpid());
     ejec = getpid(); 
     
     int a = fork();
-
 
     if (a == 0) {
         printf("Soy el proceso A y tengo el pid: %d. Mi padre es %d\n", getpid(), ejec);
@@ -63,6 +60,10 @@ int main(int argc, char ** argv){
                         Z = getpid();
                         alarm(alar);
                         signal(SIGALRM, alarma);
+
+                        if (fork()==0) 
+                            execlp("pstree","pstree","-cp",NULL);
+
                         pause();
                     }
                 }
