@@ -29,14 +29,29 @@ int main(){
 
     int a = bind(soc, (struct sockaddr * )&serverAddr,sizeof(serverAddr));
     if (a != 0) {
-        printf("error at binding\n");
-        return -1;
+        printf( "\x1b[31m" "****************************************\n" "\x1b[0m");
+        printf( "\x1b[31m" "**           ERROR AT BINDING         **\n" "\x1b[0m");
+        printf( "\x1b[31m" "****************************************\n" "\x1b[0m");
+        exit(-1);
+    }else {
+        printf( "\x1b[32m" "****************************************\n" "\x1b[0m");
+        printf( "\x1b[32m" "**           BINDED CORRECTLY         **\n" "\x1b[0m");
+        printf( "\x1b[32m" "****************************************\n" "\x1b[0m");
     }
 
-    listen(soc, 10);
+    if(listen(soc, 10)!=0){
+        printf( "\x1b[31m" "****************************************\n" "\x1b[0m");
+        printf( "\x1b[31m" "**           ERROR AT LISTENING       **\n" "\x1b[0m");
+        printf( "\x1b[31m" "****************************************\n" "\x1b[0m");
+        exit(-1);
+    }else {
+        printf( "\x1b[32m" "****************************************\n" "\x1b[0m");
+        printf( "\x1b[32m" "**           LISTENED CORRECTLY       **\n" "\x1b[0m");
+        printf( "\x1b[32m" "****************************************\n" "\x1b[0m");
+    }
 
     struct sockaddr_in clientAddr;
-    int clientAddrLen = sizeof(clientAddr);
+    unsigned int clientAddrLen = sizeof(clientAddr);
 
     char buff[1024];
     char history[4096];
@@ -45,11 +60,16 @@ int main(){
 
     int client = accept(soc, (struct sockaddr *)&clientAddr,  &clientAddrLen);
     if (client >=0) {
-
-        printf("\x1b[32m"
-               "client accepted\n"
-               "\x1b[0m");
+        printf( "\x1b[32m" "****************************************\n" "\x1b[0m");
+        printf( "\x1b[32m" "**           CLIENT ACCEPTED          **\n" "\x1b[0m");
+        printf( "\x1b[32m" "****************************************\n" "\x1b[0m");
+    }else {
+        printf( "\x1b[31m" "****************************************\n" "\x1b[0m");
+        printf( "\x1b[31m" "**           CLIENT REFUSED?          **\n" "\x1b[0m");
+        printf( "\x1b[31m" "****************************************\n" "\x1b[0m");
+        exit(-1);
     }
+
     FILE *fp;
     while (1) {
 
@@ -57,32 +77,56 @@ int main(){
         printf("%s", buff);
 
         if (strcmp(buff, "exit\n")==0) {
-            printf( "\x1b[31m" "the user has left \n" "\x1b[0m");
-            break;
+            bzero(history,4096);
+            printf( "\x1b[31m" "one user has left \n" "\x1b[0m");
+            *historyPointer = 0;
+            client = accept(soc, (struct sockaddr *)&clientAddr,  &clientAddrLen);
+            if (client >=0) {
+                printf( "\x1b[32m" "****************************************\n" "\x1b[0m");
+                printf( "\x1b[32m" "**           CLIENT ACCEPTED          **\n" "\x1b[0m");
+                printf( "\x1b[32m" "****************************************\n" "\x1b[0m");
+            }else {
+                printf( "\x1b[31m" "****************************************\n" "\x1b[0m");
+                printf( "\x1b[31m" "**           CLIENT REFUSED?          **\n" "\x1b[0m");
+                printf( "\x1b[31m" "****************************************\n" "\x1b[0m");
+                exit(-1);
+            }
+            continue;
+
+        }else if (strcmp(buff, "exit -s\n")==0) {
+                printf( "\x1b[31m" "one user has closed the server\n" "\x1b[0m");
+             break;
         }else if (strcmp(buff, "history\n")==0) {
             write(client, history, *historyPointer);
-            //printf("%d", *historyPointer);
         } else{
             putInHistory(history, historyPointer, buff);
 
             fp = popen(buff, "r");
             //write(soc, buff, 1024); examplejj
             int n = 0;
-            while (buff[n]!=EOF && n!=1024) {
+            while (buff[n]!=EOF && n<1024) {
                 buff[n] = getc(fp);
                 n++;
             }
+
+            if (n == 1024) {
+                buff[1023] = EOF;
+            }
+
             // int i = 0;
             // while (buff[i]!=EOF) {
             //     printf("%c", buff[i]);
             //     i++;
             // }
-            write(client, buff, sizeof(buff));
+
+            write(client, buff, n);
+            //fclose(fp);
         }
 
         bzero(buff,sizeof(buff));
     }
 
-    //fclose(fp);
+    free(historyPointer);
+    // fclose(fp);
     close(soc);
 }
