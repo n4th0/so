@@ -67,12 +67,8 @@ int main(int argc, char ** argv){
             bzero(buff, sizeof(buff));
             continue;
         }
-        // FILE *f;
-         read(soc, buff, sizeof(buff));
+        read(soc, buff, sizeof(buff));
 
-        // while (fgets(buff, sizeof(buff), f) !=NULL)
-        //         printf("%s\n", buff);
-        //printf("%s",buff);
 
         int i = 0;
         while (buff[i]!=EOF && i<1024) {
@@ -81,7 +77,6 @@ int main(int argc, char ** argv){
         }
 
         bzero(buff, sizeof(buff));
-
     }
 
     close(soc);

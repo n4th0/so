@@ -102,31 +102,24 @@ int main(){
             putInHistory(history, historyPointer, buff);
 
             fp = popen(buff, "r");
-            //write(soc, buff, 1024); examplejj
+
             int n = 0;
             while (buff[n]!=EOF && n<1024) {
                 buff[n] = getc(fp);
                 n++;
             }
 
+
             if (n == 1024) {
                 buff[1023] = EOF;
             }
 
-            // int i = 0;
-            // while (buff[i]!=EOF) {
-            //     printf("%c", buff[i]);
-            //     i++;
-            // }
-
             write(client, buff, n);
-            //fclose(fp);
         }
 
         bzero(buff,sizeof(buff));
     }
 
     free(historyPointer);
-    // fclose(fp);
     close(soc);
 }
