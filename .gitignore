@@ -1,3 +1,4 @@
 *.out
 p2/serv
 p2/cli
+*.class
