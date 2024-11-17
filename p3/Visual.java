@@ -23,7 +23,7 @@ public class Visual extends JFrame{
 
         setSize(v.size()*50+(v.size()-1)*50+200, 150+Memory.MAX_SIZE/4);
         setTitle("Memory management");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
 
@@ -32,8 +32,9 @@ public class Visual extends JFrame{
         // paint the color of the processes
         for (int i = 0; i < n.size(); i++) {
             g.setColor(this.getColorByID(n.get(i).id));
-            g.fillRect(i*(v.size()*50+(v.size()-1)*50)/n.size()+100, 40, 30, 20);
-            g.drawString("Process "+n.get(i).id, i*(v.size()*50+(v.size()-1)*50)/n.size()+87, 37);
+            g.fillRect(i*(v.size()*50+(v.size()-1)*50)/n.size()+100+5, 40, (v.size()*50+(v.size()-1)*50)/n.size()-10, 20);
+            g.setColor(Color.BLACK);
+            g.drawString("Process "+n.get(i).id, i*(v.size()*50+(v.size()-1)*50)/n.size()+105, 37);
         }
 
         for (int i = 0; i < v.size(); i++) {

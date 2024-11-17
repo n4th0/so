@@ -1,28 +1,39 @@
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
 public class Memory{
 
     public static int MAX_SIZE = 2000;
-    public static void main(String args[]){
-        Memory m = new Memory();
-
-
-
-        ArrayList<Process> n = m.readFromFile("prueba.txt");
+    public Memory(File f, int a, int max_size){
+        MAX_SIZE = max_size;
+        ArrayList<Process> n = this.readFromFile("prueba.txt");
         ArrayList<Process> n2 = new ArrayList<>();
         for (int i = 0; i < n.size(); i++) {
             n2.add(new Process(n.get(i)));
-            //System.out.println(n.get(i).arrivalTime);
+        }
+        ArrayList <ArrayList<Partition>> bigOne = new ArrayList<>();
+
+        switch(a){
+            case 1:
+                bigOne = this.firstSpot(n);
+                break;
+            case 2:
+                bigOne = this.firstSpot(n); // TODO implement the function here
+                                            // second spot
+                break;
+            case 3:
+                bigOne = this.bestPosition(n);
+                break;
+            case 4:
+                bigOne = this.worstPosition(n);
+                break;
         }
 
 
-        // TODO should i sort the vector by the arrival time? perhaps
-
-        ArrayList <ArrayList<Partition>> bigOne = m.worstPosition(n);
 
         for (int i = 0; i < bigOne.size(); i++) {
             System.out.println("partition "+i);
@@ -32,7 +43,7 @@ public class Memory{
             System.out.println();
         }
 
-        Visual a = new Visual(bigOne, n2);
+        Visual a2 = new Visual(bigOne, n2);
     }
 
     public ArrayList <ArrayList<Partition>> worstPosition(ArrayList<Process> n){
@@ -168,6 +179,7 @@ public class Memory{
             if (partitions.get(i).idOfTheProcess == -1 && partitions.get(i+1).idOfTheProcess ==-1) {
                 partitions.get(i).lastPosition = partitions.get(i+1).lastPosition;
                 partitions.remove(i+1);
+                i--;
             }
         }
     }
@@ -235,7 +247,6 @@ public class Memory{
             this.removeProcessesFromMemory(n, partitions);
 
             this.mergePartitions(partitions);
-
 
             indexOfPartitions++;
         }

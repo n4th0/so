@@ -10,14 +10,18 @@ public class Process {
     public boolean inCPU;
     public Color color;
     // 8 processes
-    public static Color arr[] = { Color.CYAN, Color.GREEN, Color.YELLOW, Color.RED, 
-        Color.MAGENTA, Color.ORANGE, Color.DARK_GRAY, Color.PINK};
+    public static Color arr[] = { 
+        new Color(34, 0, 255), new Color(27, 96, 100), new Color(255, 0, 81), 
+        new Color(47, 100, 27), new Color(0, 255, 110), new Color(144, 0, 255), 
+        new Color(255, 140, 0), Color.CYAN, Color.GREEN, Color.YELLOW, Color.RED, 
+        Color.MAGENTA, Color.ORANGE, Color.DARK_GRAY, Color.PINK,
+    };
 
 
     /**
      * Process.
      * The process from the user.
-     * @param id int The id has to be less than 8 TODO fix this.
+     * @param id int The id has to be less than 15
      * @param arrivalTime int 
      * @param sizeInMemory int 
      * @param time int 
@@ -27,9 +31,8 @@ public class Process {
         this.sizeInMemory = sizeInMemory;
         this.time = time;
         this.arrivalTime = arrivalTime;
-        this.color = arr[id];
+        this.color = arr[id-1];
         inCPU = false;
-        // something
     }
 
 
