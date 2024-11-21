@@ -22,6 +22,7 @@ public class Visual2 extends JFrame {
     JFileChooser fC;
     JButton b1;
     JComboBox<String> menu;
+
     public Visual2() {
         setSize(500,500);
         setTitle("Practice 3- OS");
@@ -38,24 +39,27 @@ public class Visual2 extends JFrame {
 
         fC = new JFileChooser();
         menu = new JComboBox<String>();
-        menu.addItem("First");
-        menu.addItem("Second");
+
+        // menu.addItem("First");
+        // menu.addItem("Second");
         menu.addItem("Best");
         menu.addItem("Worst");
 
         b1.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                if (fC.getSelectedFile()== null || memorySize.getText().isEmpty()) { return; }
+                if (fC.getSelectedFile()== null) { return; }
                 
-                int a =0, b = 0;
+                int a =0, b = 2000;
 
                 File n = fC.getSelectedFile();
 
-                if (menu.getSelectedItem().equals("First")) { a = 1; }
-                if (menu.getSelectedItem().equals("Second")) { a = 2; }
+                // if (menu.getSelectedItem().equals("First")) { a = 1; }
+                // if (menu.getSelectedItem().equals("Second")) { a = 2; }
                 if (menu.getSelectedItem().equals("Best")) { a = 3; }
                 if (menu.getSelectedItem().equals("Worst")) { a = 4; }
-                b = Integer.valueOf(memorySize.getText());
+
+                if(!memorySize.getText().isEmpty())
+                    b = Integer.valueOf(memorySize.getText());
 
                 if (a== 0 || b <= 0) { return; }
                 Memory m = new Memory(n, a, b);
